@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD 3.0//EN"
+						"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.springlec.base.dao.BCBookDao">
+
+	<select id="confirmation" resultType="com.springlec.base.model.checkdate2Dto">
+		select roPrice, roMax, regcamp_regSeq, regImage4 from checkdate2 where roNum = #{roNum} and regName = #{regName}
+	</select>
+	<select id="readRoom" resultType="com.springlec.base.model.roomDto">
+		select * from room where regcamp_regSeq = #{regSeq} and roNum = #{roNum}
+	</select>
+	<select id="diffDate" resultType="int">
+		select TimeStampdiff(day,#{startdate},#{stopdate})
+	</select>
+</mapper>

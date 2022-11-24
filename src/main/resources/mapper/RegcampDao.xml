@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD 3.0//EN"
+						"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.springlec.base.dao.RegcampDao">
+
+	<select id="regcampDao" resultType="com.springlec.base.model.regcampDto">
+		select * from regcamp;
+	</select>
+	
+	<select id="regcampDetailDao" resultType="com.springlec.base.model.regcampDto">
+		select * from regcamp where regSeq = #{regSeq};
+	</select>
+
+	<select id="reviewDao" resultType="com.springlec.base.model.reviewDto">
+		select * from review, regcamp where regcamp_regSeq = regSeq and regSeq=#{regSeq};
+	</select>
+
+
+	<select id="reviewAvgDao" resultType="com.springlec.base.model.reviewDto">
+		select avg(rvStar) as rvStaravg from review, regcamp where regcamp_regSeq = regSeq and regSeq=#{regSeq};
+	</select>
+	
+	<select id="regcampImageDao" resultType="com.springlec.base.model.MyregcampDto">
+		select regImage1, regImage2, regImage3 from regcamp where regSeq=#{regSeq};
+	</select>
+	
+	<select id="regcampFacilityDao" resultType="com.springlec.base.model.FacilityDto">
+		select fName from facility f, regcamp rc where f.regcamp_regSeq = rc.regSeq and regcamp_regSeq = #{regSeq};
+	</select>
+	
+	<select id="regcampKeyDao" resultType="com.springlec.base.model.KeyDto">
+		select kName from keyword k, regcamp rc where k.regcamp_regSeq = rc.regSeq and regcamp_regSeq = #{regSeq};
+	</select>
+	
+	<select id="regcampSearchDao" resultType="com.springlec.base.model.regcampDto">
+		select * from regcamp where ${query} like #{content};
+	</select>
+	
+</mapper>

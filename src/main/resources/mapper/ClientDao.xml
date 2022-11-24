@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD 3.0//EN"
+						"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.springlec.base.dao.ClientDao">
+
+	
+	<insert id="cJoinDao">
+		insert into client (cId,cPw,cName,cPhone,cEmail,cDate,zonecode,address,buildingName,detailAddress)
+		values(#{cId},#{cPw},#{cName},#{cPhone},#{cEmail},curdate(),#{zonecode},#{address},#{buildingName},#{detailAddress})
+	</insert>
+	
+	<select id="cLoginDao" resultType="com.springlec.base.model.ClientDto">
+		select * from client where cDdate is null and cId=#{cId} and cPw=#{cPw}
+	</select>
+	
+	<select id="cInfoDao" resultType="com.springlec.base.model.ClientDto">
+		select * from client where cId = #{cId}
+	</select>
+	
+	<update id="cInfoModifyDao">
+		update client set cPhone=#{cPhone} , cEmail=#{cEmail} , cPw=#{cPw}, cName=#{cName}, zonecode=#{zonecode}, 
+		address=#{address}, buildingName=#{buildingName}, detailAddress=#{detailAddress}, cMdate=curdate() where cId=#{cId}
+	</update>
+	
+	<update id="cDeleteDao">
+		update client set cDdate=curdate() where cId=#{cId}
+	</update>
+	
+	
+	<select id="cIdFindDao" resultType="com.springlec.base.model.ClientDto">
+		select cId from client where cDdate is null and cName=#{cName} and cEmail=#{cEmail}
+	</select>
+	
+	<select id="cPwFindDao" resultType="com.springlec.base.model.ClientDto">
+		select cPw from client where cDdate is null and cId=#{cId} and cName=#{cName} and cEmail=#{cEmail}
+	</select>
+	
+	<select id="ruHostDao">
+		select count(*) from client, host where cId=hId and cId=#{cId}
+	</select>
+	
+	
+</mapper>

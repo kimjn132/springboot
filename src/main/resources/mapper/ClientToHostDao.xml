@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD 3.0//EN"
+						"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.springlec.base.dao.ClientToHostDao">
+
+	<select id="hostCheckDao" resultType="int">
+		select count(*) from
+		client, host where cId=hId and cId=#{cId}
+	</select>
+
+	<select id="cShowDao"
+		resultType="com.springlec.base.model.ClientDto">
+		select cId, cName, cPhone, cEmail, cImage from client where
+		cId=#{cId}
+	</select>
+
+	<insert id="hInsertDao">
+		insert into host (hId, hDate, hSummary) values
+		(#{hId},curdate(),#{hSummary})
+	</insert>
+
+	<update id="hImageDao">
+		update host set hImage=#{hImage} where hId=#{hId}
+	</update>
+
+	<select id="showHostDao"
+		resultType="com.springlec.base.model.HostDto">
+		select * from host where hId=#{hId}
+	</select>
+
+
+</mapper>

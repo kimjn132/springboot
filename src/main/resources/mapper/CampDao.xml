@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD 3.0//EN"
+						"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.springlec.base.dao.CampDao">
+
+	<select id="listCamp" resultType="com.springlec.base.model.campDto">
+		select distinct * from camping.rch where regSeq = #{regSeq}
+	</select>
+
+	<select id="searchRegCamp" resultType="com.springlec.base.model.campDto">
+		select * from camping.regcamp where ${query} like #{content}
+	</select>
+
+	<select id="dateCheck" resultType="com.springlec.base.model.campDto">
+		select distinct * from camping.rch where regSeq=#{regSeq} and roNum not in ( select distinct roNum from BPRCH where boCheckindate between #{startdate} and #{stopdate})
+	</select>
+
+	<select id="readMaxSeq" resultType="int">
+		select max(boSeq) as result from book 
+	</select>
+	
+	<select id="readRoom" resultType="com.springlec.base.model.roomDto">
+		select * from room where regcamp_regSeq = #{regSeq} and roNum = #{roNum}
+	</select>	
+	<insert id="insertPay" >
+		insert into pay (cid, room_roSeq, room_regcamp_regSeq, room_regcamp_host_hseq, client_cId) values (#{strRd}, #{room_roSeq},#{room_regcamp_regSeq},#{room_regcamp_host_hseq},#{client_cId})
+	</insert>
+	<insert id="insertBook" >
+		insert into book (boPrice, boDate, boCheckindate, boGroup, boCount,pay_cid, pay_room_roseq, pay_room_regcamp_regSeq, pay_room_regcamp_host_hSeq, pay_client_cid ) values (#{boPrice},now(),#{boCheckindate},#{boGroup},#{boCount},#{cId}, #{roseq},#{regSeq},#{host_hSeq},#{client_cId})
+	</insert>
+	<select id="diffDate" resultType="int">
+		select TimeStampdiff(day,#{startdate},#{stopdate}) as result
+	</select>
+	<select id="readRoomPrice" resultType="int">
+		select roPrice from room where regcamp_regSeq = #{regSeq} and roNum = #{roNum}
+	</select>
+	<update id="updateBook" >
+		update book set boGroup = #{boGroup} where boSeq=#{boGroup}
+	</update>
+	<select id="Nextday" resultType="String">
+		select adddate(#{Startdate},1) as result;
+	</select>
+	<select id="ViewBooking" resultType="com.springlec.base.model.BookJoinDto">
+		select regSeq, regName, regCategory, roNum, roPrice, boCheckindate,boCheckoutdate, boGroup, days, client_cId, regImage2 from viewBooking where boCheckindate > now() and client_cId = #{cId}
+	</select>
+			
+</mapper>

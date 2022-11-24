@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD 3.0//EN"
+						"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.springlec.base.dao.AskDao">
+
+
+	<insert id="askDao">
+		insert into ask (aCId, aTitle, aContent, aTime, aRegSeq) values(#{aCId},#{aTitle},#{aContent},now(),#{aRegSeq});
+	</insert>
+
+</mapper>
+
+
